@@ -1,0 +1,6 @@
+name: xCore
+version: ${project.version}
+authors:
+  - WuShei
+  - DwaSlashe
+main: xyz.dwaslashe.core.Main

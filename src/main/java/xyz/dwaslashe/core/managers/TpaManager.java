@@ -47,7 +47,7 @@ public class TpaManager {
                 toEnd -= 1;
                 user.sendTitle(Api.fixColor("&fTELEPORTACJA"), Api.fixColor("&8» &7Teleportacja nastapi za &e{seconds}sek &7do konca! &8«".replace("{seconds}", toEnd + "")));
             }
-        }.runTaskTimer(Main.getPlugin(), 0, 20));
+        }.runTaskTimer(Main.getInstance(), 0, 20));
     }
 
     protected static void removeTeleport(Player user){
