@@ -4,20 +4,20 @@ import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
 import org.bukkit.inventory.ItemStack;
 import xyz.dwaslashe.core.Main;
+import xyz.dwaslashe.core.data.User;
 import xyz.dwaslashe.resources.helpers.GodlyStack;
 import xyz.dwaslashe.resources.helpers.InventoryHelper;
 import xyz.dwaslashe.lang.Lang;
 import xyz.dwaslashe.lang.cache.LangCache;
 import xyz.dwaslashe.lang.data.LocalPlayer;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class PlayerJoinListener implements Listener {
 
@@ -36,7 +36,7 @@ public class PlayerJoinListener implements Listener {
         localPlayer.setPlayer(player);
     }
 
-    @EventHandler
+    @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
@@ -70,7 +70,10 @@ public class PlayerJoinListener implements Listener {
         );
 
         LangCache langCache = Main.getInstance().getLangCache();
+        Map<Integer, Lang> slotLangMap = new HashMap<>();
         for (Lang lang : langCache.getLangMap().values()) {
+            slotLangMap.put(lang.get("lang.item.slot", int.class), lang);
+
             GodlyStack pol = new GodlyStack(Material.PLAYER_HEAD, 1, (short) 3)
                     .editMeta(itemMeta -> {
                         itemMeta.setDisplayName(translate(lang.get("lang.item.name", String.class)));
@@ -95,7 +98,31 @@ public class PlayerJoinListener implements Listener {
                     " &7you must look for other language."));
         }, new GodlyStack(Material.PLAYER_HEAD, 1, (short) 3));
 
-        inventoryHelper.click(event1 -> event1.setCancelled(true));
+        User user = User.getOnline(player.getName());
+        if(user == null) return;
+        LocalPlayer localPlayer = user.getLocalPlayer();
+
+        inventoryHelper.click(event1 -> {
+            event1.setCancelled(true);
+            if(event1.getSlot() == 31){
+                Lang lang = Main.getInstance().getLangCache().getLangMap().get("default");
+                if(lang.equals(localPlayer.getLang())){
+                    localPlayer.getMessage("lang.already_have").send();
+                    return;
+                }
+                localPlayer.chooseLanguage(lang);
+            } else {
+                Lang lang = slotLangMap.get(event1.getSlot());
+                if(lang == null) return;
+                if(lang.equals(localPlayer.getLang())){
+                    localPlayer.getMessage("lang.already_have").send();
+                    return;
+                }
+                localPlayer.chooseLanguage(lang);
+            }
+            localPlayer.getMessage("lang.chose").send();
+            player.closeInventory();
+        });
         inventoryHelper.open(player);
     }
 }

@@ -25,6 +25,8 @@ public class LangMessages {
                 "  &fchose this language so far",
                 " ",
                 " &f~Translator: WuShei ( &aServer Team &f)"));
+        lang.register("lang.chose", "&7Thanks for chose &cEnglish&7.");
+        lang.register("lang.already_have", "&7You already have &fthis &7language.");
 
         lang.register("events.join.message", Arrays.asList("&7Welcome &a{PLAYER} &7in the our server.",
                 " &7Players: &a{PLAYERS-ONLINE}&2/{PLAYERS-MAX}",
