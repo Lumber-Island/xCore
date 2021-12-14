@@ -16,14 +16,26 @@ public class LocalPlayer {
         return Main.getInstance().getLocalPlayerCache().getPlayerMap().get(name);
     }
 
+    public static Map<String, LocalPlayer> getPlayerMap(){
+        return Main.getInstance().getLocalPlayerCache().getPlayerMap();
+    }
+
     private final String name;
     private Player player;
 
-    private List<String> messages = new ArrayList<>();
+    private final List<String> messages = new ArrayList<>();
     private Lang lang;
 
     public LocalPlayer(String name){
         this.name = name;
+    }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
+    public void setLang(Lang lang) {
+        this.lang = lang;
     }
 
     public LocalPlayer putMessage(String message){
@@ -41,16 +53,24 @@ public class LocalPlayer {
         return this;
     }
 
-    public MessageProvider<String> getMessage(String path){
-        return new MessageProvider<>(this, lang.get(path, String.class), false);
+    public MessageProvider getMessage(String path){
+        return new MessageProvider(this, lang.get(path, String.class), false);
     }
 
-    public MessageProvider<ArrayList<String>> getListMessage(String path){
-        return new MessageProvider<>(this, lang.get(path, ArrayList.class), true);
+    public MessageProvider getListMessage(String path){
+        return new MessageProvider(this, lang.get(path, ArrayList.class), true);
     }
 
     public void send(){
         player.sendMessage(ChatColor.translateAlternateColorCodes('&', String.join("\n", messages)));
         messages.clear();
+    }
+
+    public void chooseLanguage(Lang lang){
+        if(this.lang != null)
+            this.lang.getLocalPlayerList().remove(this);
+
+        this.lang = lang;
+        lang.getLocalPlayerList().add(this);
     }
 }

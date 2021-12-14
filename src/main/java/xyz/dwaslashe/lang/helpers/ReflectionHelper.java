@@ -1,6 +1,7 @@
 package xyz.dwaslashe.lang.helpers;
 
 import lombok.SneakyThrows;
+import net.minecraft.server.level.EntityPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 
@@ -13,7 +14,7 @@ import java.util.function.Function;
 
 public class ReflectionHelper {
 
-    private static String NMS_PREFIX = "net.minecraft.server.unknown";
+    private static String NMS_PREFIX = "net.minecraft.server";
     private static String OCB_PREFIX = "org.bukkit.craftbukkit.unknown";
 
     private static Class<?> CraftPlayerClass;
@@ -32,8 +33,13 @@ public class ReflectionHelper {
         setOcbPrefix("org.bukkit.craftbukkit." + getVersion() + ".");
         setNmsPrefix("net.minecraft.server." + getVersion() + ".");
         CraftPlayerClass = getOcbClass("entity.CraftPlayer");
-        EntityPlayerClass = getNmsClass("EntityPlayer");
-        getHandle = getMethod(EntityPlayerClass, "getHandle");
+        try {
+            EntityPlayerClass = Class.forName(NMS_PREFIX + "EntityPlayer");
+        } catch (ClassNotFoundException e){
+            setNmsPrefix("net.minecraft.server.");
+            EntityPlayerClass = getNmsClass("level.EntityPlayer");
+        }
+        getHandle = getMethod(CraftPlayerClass, "getHandle");
     }
 
     public static String getVersion() {

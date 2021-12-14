@@ -3,16 +3,24 @@ package xyz.dwaslashe.lang.data;
 import java.util.List;
 import java.util.Objects;
 
-public class MessageProvider<T> {
+public class MessageProvider {
 
     private final LocalPlayer localPlayer;
     private Object message;
 
-    public MessageProvider(LocalPlayer localPlayer, T messageComponent, boolean list){
+    public MessageProvider(LocalPlayer localPlayer, Object messageComponent, boolean list){
         this.localPlayer = localPlayer;
         this.message = messageComponent;
         if(list && !isList()) message = migrateToList();
         else message = migrateToString();
+    }
+
+    public MessageProvider replace(CharSequence target, Object replacement){
+        Objects.requireNonNull(replacement);
+        if(isList())
+            message = ((List<?>)message).stream().map(obj -> Objects.toString(obj).replace(target, replacement.toString())).toList();
+        else message = ((String)message).replace(target, replacement.toString());
+        return this;
     }
 
     public LocalPlayer getLocalPlayer() {
@@ -36,9 +44,8 @@ public class MessageProvider<T> {
     }
 
     public void send(){
-        if(isList()) {
-            localPlayer.putMessages(migrateToList());
-        } else localPlayer.putMessage(migrateToString());
+        if(isList()) localPlayer.putMessages(migrateToList());
+        else localPlayer.putMessage(migrateToString());
         localPlayer.send();
     }
 }

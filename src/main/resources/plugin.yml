@@ -1,5 +1,6 @@
-name: xCore
+name: MagicBroom
 version: ${project.version}
+api-version: 1.17
 authors:
   - WuShei
   - DwaSlashe
