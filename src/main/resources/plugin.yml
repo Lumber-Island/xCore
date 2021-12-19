@@ -5,3 +5,5 @@ authors:
   - WuShei
   - DwaSlashe
 main: xyz.dwaslashe.core.Main
+depend:
+  - ForceResourcepacks

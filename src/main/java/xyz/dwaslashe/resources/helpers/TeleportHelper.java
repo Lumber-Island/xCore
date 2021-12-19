@@ -6,21 +6,22 @@ import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 import xyz.dwaslashe.core.Main;
 
-import java.util.Objects;
 import java.util.function.Consumer;
 
 public class TeleportHelper {
 
+    private static final Helper helper = new Helper();
+
     private final String name;
 
     private Player player;
-    private Location location;
+    private int counter;
 
     private BukkitTask lastRequest;
 
     private boolean teleportRequest;
 
-    private TeleportHelper(Player player) {
+    public TeleportHelper(Player player) {
         this.name = player.getName();
         this.player = player;
     }
@@ -37,8 +38,8 @@ public class TeleportHelper {
         }
         player.setLastDamage(0);
         this.teleportRequest = true;
+        this.counter = time;
         this.lastRequest = new BukkitRunnable() {
-            int delay = time;
             final Location from = player.getLocation();
 
             @Override
@@ -53,12 +54,12 @@ public class TeleportHelper {
                     teleportRequest = false;
                     cancel();
                 }
-                if (!Objects.equals(player.getLocation(), from)) {
+                if (!helper.locationEquals(from, player.getLocation())) {
                     reasonConsumer.accept(EndReason.MOVE);
                     teleportRequest = false;
                     cancel();
                 }
-                if (delay --> 0) {
+                if (TeleportHelper.this.counter --> 0) {
                     counter.accept(player);
                 } else {
                     reasonConsumer.accept(EndReason.END);
@@ -68,6 +69,18 @@ public class TeleportHelper {
                 }
             }
         }.runTaskTimer(Main.getInstance(), 0, 20);
+    }
+
+    public int getCounter() {
+        return counter;
+    }
+
+    public Player getPlayer() {
+        return player;
+    }
+
+    public String getName() {
+        return name;
     }
 
     public enum EndReason {

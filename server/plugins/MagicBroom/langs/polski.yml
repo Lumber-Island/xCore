@@ -1,0 +1,63 @@
+lang:
+  author: WuShei
+  minecraft_locale: pl-pl
+  head: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNGNhYzk3NzRkYTEyMTcyNDg1MzJjZTE0N2Y3ODMxZjY3YTEyZmRjY2ExY2YwY2I0YjM4NDhkZTZiYzk0YjQifX19
+  item:
+    slot: 14
+    name: '&cPolski &8( &4pl-pl &8)'
+    lore:
+    - ' &7Aby wybrac jezyk &cPolski'
+    - ' &7kliknij na ikone.'
+    - ' '
+    - ' &a&m  &2&m>&7 {PLAYERS} users'
+    - '  &fchose this language so far'
+    - ' '
+    - ' &f~Tlumacz: WuShei ( &aServer Team &f)'
+  chose: '&7Thanks for chose &cEnglish&7.'
+  already_have: '&7You already have &fthis &7language.'
+events:
+  join:
+    message:
+    - '&7Welcome &a{PLAYER} &7in the our server.'
+    - ' &7Players: &a{PLAYERS-ONLINE}&2/{PLAYERS-MAX}'
+    - ' &7Lovely players: &2{PLAYERS-TOTAL}'
+    message_global_first: '&cALERT! &8[&a+&8] &7Welcome &a{PLAYER} &7on the server.
+      Everyone who said to s/he &a"Hello" &7receive &afree 5 dolars.'
+    message_global: '&8[&a+&8] &7Player &a{PLAYER} &7joined to the server.'
+  gender:
+    alert: '&7Please upset your gender to easier contact with you. That''s optional
+      function.'
+    correct:
+      female: |-
+        &7Thanks you for chose yours gender &d(FEMALE)
+        &7For help you received &afree 5 dolars.
+      male: |-
+        &7Thanks you for chose yours gender &b(MALE)
+        &7For help you received &afree 5 dolars.
+    confirm: '&7Please use this command one time more to &aconfirm &7gender change.'
+    remove: '&7Please use this command one time more to &aconfirm &7gender &cremove&7.'
+  teleport:
+    counter: '&7Teleportation: &c{TIME} to end.'
+    start: '&7Starting... &7Teleportation will be end in &c{TIME}'
+time:
+  days: day/s
+  hours: hour/s
+  minutes: min/s
+  seconds: sec/s
+  millis: ms
+notifications:
+- '&9[NOTIFY] &8| &7Everyone who chose him gender may attend in meetings and to get
+  married with other people.'
+- '&9[NOTIFY] &8| &7If you see cheater please report him here &f-> &a/report cheater
+  [nick]'
+- '&9[NOTIFY] &8| &7If you see any bug please report him here &f-> &a/report bug [bug
+  description]'
+- '&9[NOTIFY] &8| &7You may buy here cars, mechanism plans and more other thinks.
+  &2[/shop]'
+- '&9[NOTIFY] &8| &7Do you want hide chat? Use the command &a/manage'
+- '&9[NOTIFY] &8| &7Please remember to &finvite &7your friends to our server. &2[/invite]'
+- '&9[NOTIFY] &8| &7If you see anyone trying to damage or harm the server''s reputation
+  please report him here &f-> &2/discord&a and create ticket'
+- '&9[NOTIFY] &8| &7Do you want hide this message? Use the command &a/notifications'
+- '&9[NOTIFY] &8| &7That''s first version our server. Any bug, problems, errors, ideas
+  please report here &f-> &a/discord'

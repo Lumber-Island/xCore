@@ -11,6 +11,10 @@
     <version>1.0-SNAPSHOT</version>
 
     <repositories>
+            <repository>
+                <id>sonatype-oss-snapshots</id>
+                <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            </repository>
         <repository>
             <id>spigot-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
@@ -36,6 +40,11 @@
             <version>1.0</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/patched_1.17.1.jar</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-minimessage</artifactId>
+            <version>4.1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>com.github.MilkBowl</groupId>
@@ -71,6 +80,11 @@
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>0.10.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>22.0.0</version>
         </dependency>
     </dependencies>
 

@@ -27,10 +27,11 @@ public class LangMessages {
                 " &f~Translator: WuShei ( &aServer Team &f)"));
         lang.register("lang.chose", "&7Thanks for chose &cEnglish&7.");
         lang.register("lang.already_have", "&7You already have &fthis &7language.");
+        lang.register("lang.actually", "&7Your currently choose language &cEnglish.");
 
         lang.register("events.join.message", Arrays.asList("&7Welcome &a{PLAYER} &7in the our server.",
-                " &7Players: &a{PLAYERS-ONLINE}&2/{PLAYERS-MAX}",
-                " &7Lovely players: &2{PLAYERS-TOTAL}"));
+                "&7Players: &a{PLAYERS-ONLINE}&2/{PLAYERS-MAX}",
+                "&7Lovely players: &2{PLAYERS-TOTAL}"));
 
         lang.register("events.join.message_global_first", "&cALERT! &8[&a+&8] &7Welcome &a{PLAYER} &7on the server. Everyone who said to s/he &a\"Hello\" &7receive &afree 5 dolars.");
         lang.register("events.join.message_global", "&8[&a+&8] &7Player &a{PLAYER} &7joined to the server.");

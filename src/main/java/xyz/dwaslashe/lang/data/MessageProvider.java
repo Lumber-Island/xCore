@@ -2,6 +2,7 @@ package xyz.dwaslashe.lang.data;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 public class MessageProvider {
 
@@ -40,7 +41,7 @@ public class MessageProvider {
     }
 
     private String migrateToString(){
-        return Objects.toString(message);
+        return isList() ? ((List<?>)message).stream().map(Objects::toString).collect(Collectors.joining("\n")) : Objects.toString(message);
     }
 
     public void send(){

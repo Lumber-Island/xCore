@@ -8,6 +8,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import xyz.dwaslashe.core.cache.UserCache;
 import xyz.dwaslashe.core.data.User;
 import xyz.dwaslashe.lang.data.LocalPlayer;
+import xyz.dwaslashe.resources.helpers.TeleportHelper;
 
 public class PlayerChangeActivityStatusListener implements Listener {
 
@@ -19,6 +20,7 @@ public class PlayerChangeActivityStatusListener implements Listener {
         if(user.getLocalPlayer() == null) user.setLocalPlayer(LocalPlayer.get(user.getName()));
 
         user.setOnline(true);
+        user.setTeleportHelper(new TeleportHelper(event.getPlayer()));
 
         UserCache.getUsers().forEach((name, other) -> {
             LocalPlayer localPlayer = other.getLocalPlayer();

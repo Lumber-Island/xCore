@@ -1,5 +1,6 @@
 package xyz.dwaslashe.resources.helpers;
 
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.chat.TextComponent;
 import org.bukkit.Location;

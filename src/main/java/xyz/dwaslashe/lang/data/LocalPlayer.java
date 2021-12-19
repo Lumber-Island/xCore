@@ -2,6 +2,7 @@ package xyz.dwaslashe.lang.data;
 
 import lombok.Getter;
 import net.md_5.bungee.api.ChatColor;
+import org.bukkit.entity.HumanEntity;
 import org.bukkit.entity.Player;
 import xyz.dwaslashe.core.Main;
 import xyz.dwaslashe.lang.Lang;
@@ -12,8 +13,16 @@ import java.util.*;
 public class LocalPlayer {
 
 
+    public static LocalPlayer get(HumanEntity humanEntity){
+        return get((Player) humanEntity);
+    }
+
     public static LocalPlayer get(String name){
         return Main.getInstance().getLocalPlayerCache().getPlayerMap().get(name);
+    }
+
+    public static LocalPlayer get(Player player){
+        return get(player.getName());
     }
 
     public static Map<String, LocalPlayer> getPlayerMap(){

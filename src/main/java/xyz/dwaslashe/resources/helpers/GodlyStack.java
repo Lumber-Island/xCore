@@ -43,7 +43,7 @@ public class GodlyStack extends ItemStack {
         super(stack);
     }
 
-    public GodlyStack editMeta(Consumer<ItemMeta> itemMetaConsumer){
+    public GodlyStack editAnyMeta(Consumer<ItemMeta> itemMetaConsumer){
         ItemMeta meta = getItemMeta();
         itemMetaConsumer.accept(meta);
         setItemMeta(meta);
@@ -69,35 +69,27 @@ public class GodlyStack extends ItemStack {
     }
 
     public void setLore(List<String> lore){
-        editMeta(itemMeta -> itemMeta.setLore(lore.stream().map(s -> ChatColor.translateAlternateColorCodes('&', s)).toList()));
+        editAnyMeta(itemMeta -> itemMeta.setLore(lore.stream().map(s -> ChatColor.translateAlternateColorCodes('&', s)).toList()));
     }
 
     public void setDisplayName(String displayName){
-        editMeta(itemMeta -> itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayName)));
+        editAnyMeta(itemMeta -> itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayName)));
     }
 
     public void setUnbreakable(boolean unbreakable){
-        editMeta(itemMeta -> itemMeta.setUnbreakable(unbreakable));
+        editAnyMeta(itemMeta -> itemMeta.setUnbreakable(unbreakable));
     }
 
     public void addItemFlag(ItemFlag... itemFlags){
-        editMeta(itemMeta -> itemMeta.addItemFlags(itemFlags));
+        editAnyMeta(itemMeta -> itemMeta.addItemFlags(itemFlags));
     }
 
     public void removeItemFlag(ItemFlag... itemFlags){
-        editMeta(itemMeta -> itemMeta.removeItemFlags(itemFlags));
+        editAnyMeta(itemMeta -> itemMeta.removeItemFlags(itemFlags));
     }
 
     public void setCustomModelData(int data){
-        editMeta(itemMeta -> itemMeta.setCustomModelData(data));
-    }
-
-    public void addAttributeModifier(Attribute attribute, AttributeModifier attributeModifier){
-        editMeta(itemMeta -> itemMeta.addAttributeModifier(attribute, attributeModifier));
-    }
-
-    public void removeAttributeModifier(Attribute attribute){
-        editMeta(itemMeta -> itemMeta.removeAttributeModifier(attribute));
+        editAnyMeta(itemMeta -> itemMeta.setCustomModelData(data));
     }
 
     public void updateSkullProperty(String value){
@@ -111,7 +103,6 @@ public class GodlyStack extends ItemStack {
         setItemMeta(skullMeta);
     }
 
-    @Deprecated
     @Override
     public ItemMeta getItemMeta() {
         return super.getItemMeta();
