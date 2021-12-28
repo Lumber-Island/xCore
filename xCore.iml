@@ -63,5 +63,6 @@
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.7.32" level="project" />
     <orderEntry type="library" name="Maven: org.jetbrains:annotations:22.0.0" level="project" />
     <orderEntry type="library" name="ForceResourcepacks" level="project" />
+    <orderEntry type="library" name="Vault" level="project" />
   </component>
 </module>

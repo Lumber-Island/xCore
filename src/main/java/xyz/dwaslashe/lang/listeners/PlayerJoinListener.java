@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerKickEvent;
 import org.bukkit.event.player.PlayerLoginEvent;
@@ -16,6 +17,8 @@ import xyz.dwaslashe.core.Main;
 import xyz.dwaslashe.core.data.User;
 import xyz.dwaslashe.lang.ChooseInventory;
 import xyz.dwaslashe.lang.data.LocalPlayer;
+
+import java.util.List;
 
 
 public class PlayerJoinListener implements Listener {
@@ -32,17 +35,24 @@ public class PlayerJoinListener implements Listener {
         Player player = event.getPlayer();
 
         User user = User.getOnline(player.getName());
-        if(user == null) return;
+        if (user == null) return;
 
         LocalPlayer localPlayer = user.getLocalPlayer();
-        if(localPlayer.getLang() != null) localPlayer.getMessage("lang.actually").send();
+        if (localPlayer.getLang() != null) localPlayer.getMessage("lang.actually").send();
     }
 
-    @EventHandler(ignoreCancelled = true)
-    public void onCheck(ResourcePackStatusEvent event){
-        if(event.getStatus().equals(ResourcePackStatus.ACCEPTED)){
+    private final List<ResourcePackStatus> allowedStatus = List.of(ResourcePackStatus.LOADED, ResourcePackStatus.REQUESTED, ResourcePackStatus.ACCEPTED);
+
+    @EventHandler
+    public void onCheck(ResourcePackStatusEvent event) {
+        if (!allowedStatus.contains(event.getStatus())) {
+            event.getPlayer().kick(Component.text("If you want to play you must\ndownload our server resourcepacks.\n\nAllow servers resourcepacks in your settings."), PlayerKickEvent.Cause.ILLEGAL_CHARACTERS);
+            return;
+        }
+        if(event.getStatus().equals(ResourcePackStatus.LOADED)) {
             LocalPlayer localPlayer = LocalPlayer.get(event.getPlayer());
+            if(localPlayer.getLang() == null)
             ChooseInventory.open(localPlayer);
-        } else event.getPlayer().kick(Component.text("If you want to play you must\ndownload our server resourcepacks.\n\nAllow servers resourcepacks in your settings."), PlayerKickEvent.Cause.ILLEGAL_CHARACTERS);
+        }
     }
 }

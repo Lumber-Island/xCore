@@ -62,6 +62,10 @@ public class Lang {
         this.file = new File(Main.getInstance().getDataFolder() + "/langs", name + ".yml");
     }
 
+    public String getName() {
+        return name;
+    }
+
     @SneakyThrows
     private void upsetRegistered(){
         langMap.forEach((key, object) -> {

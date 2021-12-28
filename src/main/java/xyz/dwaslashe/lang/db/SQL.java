@@ -9,6 +9,10 @@ public class SQL {
 
     private Connection connection;
 
+    public Connection getConnection() {
+        return connection;
+    }
+
     @SneakyThrows
     public void connect(String host, String table, String username, String password, int port, boolean ssl){
         if(!isClosed()) return;

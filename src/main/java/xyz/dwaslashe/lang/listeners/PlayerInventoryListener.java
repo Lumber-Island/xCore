@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryCloseEvent;
-import org.bukkit.inventory.Inventory;
 import org.bukkit.scheduler.BukkitTask;
 import xyz.dwaslashe.core.Main;
 import xyz.dwaslashe.lang.ChooseInventory;
@@ -27,6 +26,7 @@ public class PlayerInventoryListener implements Listener {
 
     @EventHandler
     public void onClose(InventoryCloseEvent event){
+        if(event.getReason().equals(InventoryCloseEvent.Reason.PLUGIN) || event.getReason().equals(InventoryCloseEvent.Reason.OPEN_NEW)) return;
         LocalPlayer localPlayer = LocalPlayer.get(event.getPlayer());
         if(localPlayer.getLang() != null) return;
         forceOpen(localPlayer);

@@ -1,7 +1,6 @@
 package xyz.dwaslashe.lang.helpers;
 
 import lombok.SneakyThrows;
-import net.minecraft.server.level.EntityPlayer;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 

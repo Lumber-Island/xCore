@@ -35,7 +35,7 @@ public class InventoryHelper implements Listener {
     private void onClick(InventoryClickEvent event){
         if(event.getCurrentItem() == null) return;
 
-        InventoryHelper inventoryHelper = inventoryHelperMap.get(event.getWhoClicked().getName());
+        InventoryHelper inventoryHelper = InventoryHelper.inventoryHelperMap.get(event.getWhoClicked().getName());
         if(inventoryHelper == null || inventoryHelper.eventConsumer == null) return;
 
         inventoryHelper.eventConsumer.accept(event);
@@ -43,7 +43,7 @@ public class InventoryHelper implements Listener {
 
     @EventHandler
     private void onClose(InventoryCloseEvent event){
-        inventoryHelperMap.remove(event.getPlayer().getName());
+        InventoryHelper.inventoryHelperMap.remove(event.getPlayer().getName());
     }
 
     private String title;
@@ -146,10 +146,11 @@ public class InventoryHelper implements Listener {
         return player;
     }
 
-    public void open(Player player){
+    public synchronized void open(Player player){
+        this.player = player;
+        inventoryHelperMap.remove(player.getName());
         inventoryHelperMap.put(player.getName(), this);
         player.openInventory(inventory);
-        this.player = player;
     }
 
 }

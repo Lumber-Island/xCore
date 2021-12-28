@@ -3,10 +3,10 @@ package xyz.dwaslashe.lang;
 import net.md_5.bungee.api.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryCloseEvent;
 import xyz.dwaslashe.core.Main;
 import xyz.dwaslashe.lang.cache.LangCache;
 import xyz.dwaslashe.lang.data.LocalPlayer;
-import xyz.dwaslashe.lang.listeners.PlayerJoinListener;
 import xyz.dwaslashe.resources.helpers.GodlyStack;
 import xyz.dwaslashe.resources.helpers.InventoryHelper;
 
@@ -27,7 +27,7 @@ public class ChooseInventory {
 
         InventoryHelper inventoryHelper = new InventoryHelper(player, "Choose your language", 4);
         inventoryHelper.setItemRange(0, 9, new GodlyStack(Material.GRAY_STAINED_GLASS_PANE)
-                .editAnyMeta(itemMeta -> {
+                .withEditMeta(itemMeta -> {
                             itemMeta.setDisplayName(translate(" "));
                             itemMeta.setLore(translate(Arrays.asList("&fWe currently support &aPolish&2, &aEnglish &flanguages.",
                                     "&7If doesn't exists your language please contact with us.",
@@ -39,10 +39,10 @@ public class ChooseInventory {
                 )
         );
 
-        inventoryHelper.setItemRange(9, 27, new GodlyStack(Material.ORANGE_STAINED_GLASS_PANE).editAnyMeta(itemMeta -> itemMeta.setDisplayName(" ")));
+        inventoryHelper.setItemRange(9, 27, new GodlyStack(Material.ORANGE_STAINED_GLASS_PANE).withEditMeta(itemMeta -> itemMeta.setDisplayName(" ")));
 
         inventoryHelper.setItemRange(27, 36, new GodlyStack(Material.GRAY_STAINED_GLASS_PANE)
-                .editAnyMeta(itemMeta -> {
+                .withEditMeta(itemMeta -> {
                             itemMeta.setDisplayName(translate(" "));
                             itemMeta.setLore(translate(Arrays.asList("&fWe currently support &aPolish&2 and &aEnglish &flanguages.",
                                     "&7If doesn't exists your language please contact with us.",
@@ -61,7 +61,7 @@ public class ChooseInventory {
             slotLangMap.put(lang.get("lang.item.slot", int.class), lang);
 
             GodlyStack pol = new GodlyStack(Material.PLAYER_HEAD, 1, (short) 3)
-                    .editAnyMeta(itemMeta -> {
+                    .withEditMeta(itemMeta -> {
                         itemMeta.setDisplayName(translate(lang.get("lang.item.name", String.class)));
                         itemMeta.setLore(lang.getList("lang.item.lore")
                                 .stream()
@@ -74,8 +74,8 @@ public class ChooseInventory {
             inventoryHelper.addItem(lang.get("lang.item.slot", int.class), pol);
         }
 
-        inventoryHelper.addItem(30, new GodlyStack(Material.GREEN_STAINED_GLASS_PANE).editAnyMeta(itemMeta -> itemMeta.setDisplayName(" ")));
-        inventoryHelper.addItem(32, new GodlyStack(Material.GREEN_STAINED_GLASS_PANE).editAnyMeta(itemMeta -> itemMeta.setDisplayName(" ")));
+        inventoryHelper.addItem(30, new GodlyStack(Material.GREEN_STAINED_GLASS_PANE).withEditMeta(itemMeta -> itemMeta.setDisplayName(" ")));
+        inventoryHelper.addItem(32, new GodlyStack(Material.GREEN_STAINED_GLASS_PANE).withEditMeta(itemMeta -> itemMeta.setDisplayName(" ")));
 
         inventoryHelper.addRawGodlyStack(31, godlyStack -> {
             godlyStack.updateSkullProperty("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNTM1OWQ5MTI3NzI0MmZjMDFjMzA5YWNjYjg3YjUzM2YxOTI5YmUxNzZlY2JhMmNkZTYzYmY2MzVlMDVlNjk5YiJ9fX0=");
@@ -84,9 +84,9 @@ public class ChooseInventory {
                     " &7you must look for other language."));
         }, new GodlyStack(Material.PLAYER_HEAD, 1, (short) 3));
 
-        inventoryHelper.click(event1 -> {
-            event1.setCancelled(true);
-            if(event1.getSlot() == 31){
+        inventoryHelper.click(event -> {
+            event.setCancelled(true);
+            if(event.getSlot() == 31){
                 Lang lang = Main.getInstance().getLangCache().getLangMap().get("default");
                 if(lang.equals(localPlayer.getLang())){
                     localPlayer.getMessage("lang.already_have").send();
@@ -94,7 +94,7 @@ public class ChooseInventory {
                 }
                 localPlayer.chooseLanguage(lang);
             } else {
-                Lang lang = slotLangMap.get(event1.getSlot());
+                Lang lang = slotLangMap.get(event.getSlot());
                 if(lang == null) return;
                 if(lang.equals(localPlayer.getLang())){
                     localPlayer.getMessage("lang.already_have").send();
@@ -103,8 +103,9 @@ public class ChooseInventory {
                 localPlayer.chooseLanguage(lang);
             }
             localPlayer.getMessage("lang.chose").send();
-            player.closeInventory();
+            player.closeInventory(InventoryCloseEvent.Reason.OPEN_NEW);
         });
+
         inventoryHelper.open(localPlayer.getPlayer());
     }
 

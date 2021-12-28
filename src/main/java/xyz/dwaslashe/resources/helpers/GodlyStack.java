@@ -5,8 +5,6 @@ import com.mojang.authlib.properties.Property;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
-import org.bukkit.attribute.Attribute;
-import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -43,7 +41,7 @@ public class GodlyStack extends ItemStack {
         super(stack);
     }
 
-    public GodlyStack editAnyMeta(Consumer<ItemMeta> itemMetaConsumer){
+    public GodlyStack withEditMeta(Consumer<ItemMeta> itemMetaConsumer){
         ItemMeta meta = getItemMeta();
         itemMetaConsumer.accept(meta);
         setItemMeta(meta);
@@ -69,27 +67,27 @@ public class GodlyStack extends ItemStack {
     }
 
     public void setLore(List<String> lore){
-        editAnyMeta(itemMeta -> itemMeta.setLore(lore.stream().map(s -> ChatColor.translateAlternateColorCodes('&', s)).toList()));
+        withEditMeta(itemMeta -> itemMeta.setLore(lore.stream().map(s -> ChatColor.translateAlternateColorCodes('&', s)).toList()));
     }
 
     public void setDisplayName(String displayName){
-        editAnyMeta(itemMeta -> itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayName)));
+        withEditMeta(itemMeta -> itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', displayName)));
     }
 
     public void setUnbreakable(boolean unbreakable){
-        editAnyMeta(itemMeta -> itemMeta.setUnbreakable(unbreakable));
+        withEditMeta(itemMeta -> itemMeta.setUnbreakable(unbreakable));
     }
 
     public void addItemFlag(ItemFlag... itemFlags){
-        editAnyMeta(itemMeta -> itemMeta.addItemFlags(itemFlags));
+        withEditMeta(itemMeta -> itemMeta.addItemFlags(itemFlags));
     }
 
     public void removeItemFlag(ItemFlag... itemFlags){
-        editAnyMeta(itemMeta -> itemMeta.removeItemFlags(itemFlags));
+        withEditMeta(itemMeta -> itemMeta.removeItemFlags(itemFlags));
     }
 
     public void setCustomModelData(int data){
-        editAnyMeta(itemMeta -> itemMeta.setCustomModelData(data));
+        withEditMeta(itemMeta -> itemMeta.setCustomModelData(data));
     }
 
     public void updateSkullProperty(String value){
